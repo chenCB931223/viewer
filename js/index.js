@@ -1,26 +1,14 @@
 $(function() {
-    $('body').delegate('.view-pic', 'click', function() {
+    $('body').on('click','.view-pic', function() {
         var $container = $('<div></div>');
         $container.attr('id', 'view-box');
 
         var $mast = $('<div></div>');
-        $mast.attr('id', 'view_mast');
-        $mast.css('position', 'absolute');
-        $mast.css('top', 0);
-        $mast.css('left', 0);
-        $mast.css('button', 0);
-        $mast.css('right', 0);
-        $mast.css('width', '100%');
-        $mast.css('height', '100%');
-        $mast.css('background', '#000');
-        $mast.css('opacity', '0.7');
+        $mast.addClass('view_mast');
 
         var $img_content = $('<div></div>')
         $img_content.attr('id', 'img_content');
-        $img_content.css('position', 'absolute');
-        $img_content.css('top', '50%');
-        $img_content.css('left', '50%');
-
+        $img_content.addClass('mast_pic')
 
         var $img = $('<img/>');
         var url = $(this).attr('src');
@@ -28,20 +16,20 @@ $(function() {
         $img.attr('src', url);
 
         var $prev = $('<span></span>');
-        $prev.attr('class', 'prev iconfont icon-fanhui');
+        $prev.addClass('prev iconfont icon-fanhui');
         $img_content.append($prev);
 
         var $next = $('<span></span>');
-        $next.attr('class', 'next iconfont icon-jiantouyou');
+        $next.addClass('next iconfont icon-jiantouyou');
         $img_content.append($next);
 
         var $actic = $('<p></p>');
         var $img_alt = $(this).attr('alt');
-        $actic.attr('class', 'actic');
+        $actic.addClass('actic');
         $actic.html($img_alt);
 
         var $reset = $('<span></span>');
-        $reset.attr('class', 'reset');
+        $reset.addClass('reset');
 
         $img_content.append($img);
         $img_content.append($actic);
