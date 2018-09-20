@@ -38,7 +38,6 @@ $(function() {
         $container.append($img_content);
         $('body').append($container);
         resetPic(0.5);
-        addEvent();
         hidePic();
     });
 
