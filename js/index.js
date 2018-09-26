@@ -1,5 +1,8 @@
 $(function() {
-    var vier = new Viewer({});
+    var vier = new Viewer({
+        a:[],
+        b:[]
+    });
 })
 
 function Viewer(obj) {
@@ -10,6 +13,7 @@ function Viewer(obj) {
 Viewer.prototype.init = function() {
     this.create();
     this.addEven();
+    this.imgChange();
     this.hidePic();
 }
 Viewer.prototype.create = function() {
@@ -83,13 +87,14 @@ Viewer.prototype.setSize = function(img, scale) {
     $('.iconfont').css('height', $img_h);
 }
 Viewer.prototype.imgChange = function(step) {
+    var _this = this;
     var $img = $('.view-pic');
     $.each($img, function(i) {
         var $img_data = $($img[i]).attr('data-img');
         if ($img_data == 'a') {
-                
+            _this.a.push($img_data);
         } else if ($img_data == 'b') {
-            
+            _this.b.push($img_data)
         }
     })
 }
