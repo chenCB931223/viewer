@@ -1,10 +1,10 @@
 $(function() {
-    var vier = new Viewer();
+    var vier = new Viewer({});
 })
 
 function Viewer(obj) {
-    //this.a = obj.a;
-    //this.b = obj.b;
+    this.a = obj.a;
+    this.b = obj.b;
     this.init();
 }
 Viewer.prototype.init = function() {
@@ -60,7 +60,13 @@ Viewer.prototype.addEven = function() {
         var $img_alt = $(this).attr('alt');
         $actic.html($img_alt);
         _this.setSize(this, 0.5);
-    })
+    })；
+    $('.prev').on('click', function() {
+
+    });
+    $('.next').on('click', function() {
+
+    });
 }
 
 Viewer.prototype.setSize = function(img, scale) {
@@ -75,8 +81,17 @@ Viewer.prototype.setSize = function(img, scale) {
     $('#vier_img').css({ 'width': $img_w, 'height': $img_h });
     $('#img_content').css({ 'top': top, 'left': left });
     $('.iconfont').css('height', $img_h);
-
-
+}
+Viewer.prototype.imgChange = function(step) {
+    var $img = $('.view-pic');
+    $.each($img, function(i) {
+        var $img_data = $($img[i]).attr('data-img');
+        if ($img_data == 'a') {
+                
+        } else if ($img_data == 'b') {
+            
+        }
+    })
 }
 Viewer.prototype.hidePic = function() {
     $(".reset").on('click', function() {
