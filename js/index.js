@@ -15,9 +15,9 @@ Viewer.prototype.init = function() {
 }
 Viewer.prototype.create = function() {
     this.container = $('<div id="view-box"></div>').hide();
-    this.mast = $('<div class="view_mast"></div>').hide();
+    this.mast = $('<div class="view_mask"></div>').hide();
 
-    var strDom = '<div id="img_content" class="mast_pic">' +
+    var strDom = '<div id="img_content" class="mask_pic">' +
         '<span class="prev iconfont icon-fanhui"></span>' +
         '<span class="next iconfont icon-jiantouyou"></span>' +
         '<img id="view_img" src=""/>' +
@@ -33,7 +33,7 @@ Viewer.prototype.create = function() {
 Viewer.prototype.addEven = function() {
     var _this = this;
     $('body').on('click', '.view-pic', function() {
-        var $img = $('#view_img'),
+        var $img = $('#view_img');
         _this.mast.show();
         _this.container.show();
         var $url = $(this).attr('src');
