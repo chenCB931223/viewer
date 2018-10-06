@@ -1,7 +1,5 @@
 $(function() {
-    var vier = new Viewer({
-
-    });
+    var vier = new Viewer();
 })
 
 function Viewer() {
@@ -36,13 +34,10 @@ Viewer.prototype.addEven = function() {
     var _this = this;
     $('body').on('click', '.view-pic', function(e) {
         var $img = $('#vier_img'),
-            $actic = $('.active');
         _this.mast.show();
         _this.container.show();
         var $url = $(this).attr('src');
         $img.attr('src', $url);
-        var $img_alt = $(this).attr('alt');
-        $actic.html($img_alt);
         
         _this.setSize();
         _this.getGroup(this);
@@ -62,9 +57,9 @@ Viewer.prototype.getGroup = function(img) {
     var current_group = $(img).attr('data-group');
     if (current_group != _this.groupName) {
         _this.groupName = current_group;     
-        var groupList = $('body').find('*[data-group=' + this.groupName + ']');
+        var $groupList = $('body').find('img[data-group=' + this.groupName + ']');
         this.groupArr.length = 0;
-        groupList.each(function() {
+        $groupList.each(function() {
             _this.groupArr.push($(this).attr('src'));
         });
     }
@@ -80,7 +75,6 @@ Viewer.prototype.imgChange = function(step) {
     this.setSize();
 }
 Viewer.prototype.getArrow = function() {
-
     var arrLen = this.groupArr.length;
     if (arrLen > 1) {
         if (this.index == 0) {
@@ -95,7 +89,7 @@ Viewer.prototype.getArrow = function() {
     } else {
         $('.prev,.next').hide();
     }
-
+    $('.active').html((this.index + 1) + ' of ' + arrLen);
 }
 Viewer.prototype.setSize = function() {
     var $view_img = $('#vier_img'),
