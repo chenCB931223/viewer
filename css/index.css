@@ -13,7 +13,7 @@ img {
     cursor: pointer;
 }
 
-.view_mast {
+.view_mask {
     position: fixed;
     top: 0;
     left: 0;
@@ -28,7 +28,7 @@ img {
     width: 100%;
 }
 
-.mast_pic {
+.mask_pic {
     position: absolute;
     z-index: 9999;
 }
