@@ -20,7 +20,7 @@ Viewer.prototype.create = function() {
     var strDom = '<div id="img_content" class="mast_pic">' +
         '<span class="prev iconfont icon-fanhui"></span>' +
         '<span class="next iconfont icon-jiantouyou"></span>' +
-        '<img id="vier_img" src=""/>' +
+        '<img id="view_img" src=""/>' +
         '<div class="light_info">' +
         '<p class="active"></p>' +
         '<span class="reset">x</span>' +
@@ -32,8 +32,8 @@ Viewer.prototype.create = function() {
 }
 Viewer.prototype.addEven = function() {
     var _this = this;
-    $('body').on('click', '.view-pic', function(e) {
-        var $img = $('#vier_img'),
+    $('body').on('click', '.view-pic', function() {
+        var $img = $('#view_img'),
         _this.mast.show();
         _this.container.show();
         var $url = $(this).attr('src');
@@ -66,7 +66,7 @@ Viewer.prototype.getGroup = function(img) {
     this.index = this.groupArr.indexOf($(img).attr('src'));
 }
 Viewer.prototype.imgChange = function(step) {
-    var $img = $('#vier_img');
+    var $img = $('#view_img');
     this.index += step;
 
     $img.attr('src', this.groupArr[this.index])；
@@ -92,7 +92,7 @@ Viewer.prototype.getArrow = function() {
     $('.active').html((this.index + 1) + ' of ' + arrLen);
 }
 Viewer.prototype.setSize = function() {
-    var $view_img = $('#vier_img'),
+    var $view_img = $('#view_img'),
         $img_content = $('#img_content')；
     var theImg = new Image();
     theImg.src = $view_img.attr('src');
