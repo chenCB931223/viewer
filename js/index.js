@@ -14,8 +14,6 @@ Viewer.prototype.init = function() {
     this.create();
     this.addEven();
     this.hidePic();
-    this.getArrow();
-
 }
 Viewer.prototype.create = function() {
     this.container = $('<div id="view-box"></div>').hide();
@@ -45,9 +43,7 @@ Viewer.prototype.addEven = function() {
         $img.attr('src', $url);
         var $img_alt = $(this).attr('alt');
         $actic.html($img_alt);
-
-        this.index = $(this).index();
-
+        
         _this.setSize();
         _this.getGroup(this);
         _this.getArrow(this);
@@ -55,14 +51,9 @@ Viewer.prototype.addEven = function() {
     });
     $('.prev').on('click', function() {
         _this.imgChange(-1);
-        _this.getArrow()
-        _this.setSize();
-
     });
     $('.next').on('click', function() {
         _this.imgChange(1);
-        _this.getArrow()
-        _this.setSize();
 
     });
 }
@@ -70,25 +61,23 @@ Viewer.prototype.getGroup = function(img) {
     var _this = this;
     var current_group = $(img).attr('data-group');
     if (current_group != _this.groupName) {
-        _this.groupName = current_group;
-
-    }
-    var groupList = $('body').find('*[data-group=' + this.groupName + ']');
-
-    this.groupArr.length = 0;
-    groupList.each(function() {
-        _this.groupArr.push({
-            src: $(this).attr('src'),
+        _this.groupName = current_group;     
+        var groupList = $('body').find('*[data-group=' + this.groupName + ']');
+        this.groupArr.length = 0;
+        groupList.each(function() {
+            _this.groupArr.push($(this).attr('src'));
         });
-    });
-
+    }
+    this.index = this.groupArr.indexOf($(img).attr('src'));
 }
 Viewer.prototype.imgChange = function(step) {
     var $img = $('#vier_img');
     this.index += step;
 
-    $img.attr('src', this.groupArr[this.index].src)
-
+    $img.attr('src', this.groupArr[this.index])；
+    
+    this.getArrow();
+    this.setSize();
 }
 Viewer.prototype.getArrow = function() {
 
@@ -110,43 +99,26 @@ Viewer.prototype.getArrow = function() {
 }
 Viewer.prototype.setSize = function() {
     var $view_img = $('#vier_img'),
-        $img_content = $('#img_content'),
-        $next = $('.next');
+        $img_content = $('#img_content')；
     var theImg = new Image();
     theImg.src = $view_img.attr('src');
     var $win_w = ($(window).width()) * 0.8,
         $win_h = ($(window).height()) - 50,
         $img_w = theImg.width,
         $img_h = theImg.height;
-    var scale_w = $img_w / $win_w,
-        scale_h = $img_h / $win_h;
-
-
-
-    if ($img_w < $win_w && $img_h < $win_h) {
-        $view_img.css({ width: $img_w, height: $img_h });
-    } else {
-        if (scale_w > scale_h) {
-            $view_img.css({
-                width: $win_w,
-                height: $win_h / scale_w
-            })
-        } else {
-            $view_img.css({
-                width: $win_w / scale_h,
-                height: $win_h
-            })
-        }
-    }
-    var left = parseInt(($win_w / 0.8) - $view_img.width()) / 2,
-        top = parseInt(($win_h + 50) - $view_img.height()) / 2;
-
-
-    $img_content.css({
-        'left': left,
-        'top': top
+    var scale_w = $win_w / $img_w,
+        scale_h = $win_h / $img_h;
+    
+    var scale = Math.min(scale_w, scale_h, 1);
+    $view_img.css({
+        width: $img_w * scale,
+        height: $img_h * scale
     });
-    $next.css('height', $view_img.height())
+    
+    var top = parseInt(($win_h + 50) - $view_img.height()) / 2;
+    $img_content.css('top', top);
+    
+    $('.prev,.next').css('height', $view_img.height())
 
 }
 
