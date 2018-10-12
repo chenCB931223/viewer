@@ -56,9 +56,9 @@ Viewer.prototype.getGroup = function(img) {
 
     if (current_group != _this.groupName) {
         this.groupName = current_group;
-        var $groupList = $('body').find('img[data-group=' + this.groupName + ']');
+        this.groupList = $('body').find('img[data-group=' + this.groupName + ']');
         this.groupArr.length = 0;
-        $groupList.each(function() {
+        this.groupList.each(function() {
             _this.groupArr.push($(this));
         });
     }
