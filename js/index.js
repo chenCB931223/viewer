@@ -34,13 +34,14 @@ Viewer.prototype.create = function() {
 Viewer.prototype.addEven = function() {
     var _this = this;
     $('body').on('click', '.view-pic', function(e) {
-        var $img = $('#view_img');
         _this.mask.show();
         _this.container.show();
-        
-        _this.setSize();
+
+
         _this.getGroup(this);
+        _this.setSize();
         _this.getArrow(this);
+
 
     });
     $('.prev').on('click', function() {
@@ -63,8 +64,6 @@ Viewer.prototype.getGroup = function(img) {
         });
     }
     this.index = this.groupList.index($(img));
-
-
 }
 Viewer.prototype.imgChange = function(step) {
     this.index += step;
@@ -93,7 +92,6 @@ Viewer.prototype.getArrow = function() {
     $('.pic_alt').html(this.groupArr[this.index].attr('alt'));
 }
 Viewer.prototype.setSize = function() {
-    
     var $view_img = $('#view_img'),
         _this = this,
         $img_content = $('#img_content');
@@ -105,7 +103,6 @@ Viewer.prototype.setSize = function() {
         $img_h = theImg.height;
     var scale_w = $win_w / $img_w,
         scale_h = $win_h / $img_h;
-
     var scale = Math.min(scale_w, scale_h, 1);
     $view_img.attr('src', ' ');
     $view_img.animate({
@@ -121,7 +118,7 @@ Viewer.prototype.setSize = function() {
 
     $img_content.css('top', top);
 
-    $('.prev,.next').css('height', $img_h * scale);
+    $('.prev,.next').css('height', $img_h * scale)
 }
 
 Viewer.prototype.hidePic = function() {
