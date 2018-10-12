@@ -93,10 +93,12 @@ Viewer.prototype.getArrow = function() {
     $('.pic_alt').html(this.groupArr[this.index].attr('alt'));
 }
 Viewer.prototype.setSize = function() {
+    
     var $view_img = $('#view_img'),
+        _this = this,
         $img_content = $('#img_content');
     var theImg = new Image();
-    theImg.src = $view_img.attr('src');
+    theImg.src = this.groupArr[this.index].attr('src');
     var $win_w = ($(window).width()) * 0.8,
         $win_h = ($(window).height()) - 100,
         $img_w = theImg.width,
@@ -115,11 +117,11 @@ Viewer.prototype.setSize = function() {
             $view_img.attr('src', $url);
         });
 
-    var top = parseInt(($win_h + 50) - $view_img.height()) / 2;
+    var top = parseInt(($win_h + 50) - $img_h * scale) / 2;
 
     $img_content.css('top', top);
 
-    $('.prev,.next').css('height', $view_img.height())
+    $('.prev,.next').css('height', $img_h * scale);
 }
 
 Viewer.prototype.hidePic = function() {
