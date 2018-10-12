@@ -23,7 +23,7 @@ Viewer.prototype.create = function() {
         '<img id="view_img" src=""/>' +
         '<div class="light_info">' +
         '<p class="active"></p>' +
-        '<p class="index"></p>' +
+        '<p class="pic_alt"></p>' +
         '<span class="reset">x</span>' +
         '</div>' +
         '</div>';
@@ -37,9 +37,7 @@ Viewer.prototype.addEven = function() {
         var $img = $('#view_img');
         _this.mask.show();
         _this.container.show();
-        var $url = $(this).attr('src');
-        $img.attr('src', $url);
-
+        
         _this.setSize();
         _this.getGroup(this);
         _this.getArrow(this);
@@ -61,18 +59,16 @@ Viewer.prototype.getGroup = function(img) {
         var $groupList = $('body').find('img[data-group=' + this.groupName + ']');
         this.groupArr.length = 0;
         $groupList.each(function() {
-            _this.groupArr.push($(this).attr('src'));
+            _this.groupArr.push($(this));
         });
     }
-    this.index = this.groupArr.indexOf($(img).attr('src'));
+    this.index = this.groupList.index($(img));
 
 
 }
 Viewer.prototype.imgChange = function(step) {
-    var $img = $('#view_img');
     this.index += step;
 
-    $img.attr('src', this.groupArr[this.index]);
     this.getArrow();
     this.setSize();
 
@@ -94,6 +90,7 @@ Viewer.prototype.getArrow = function() {
         $('.prev,.next').hide();
     }
     $('.active').html((this.index + 1) + ' of ' + arrLen);
+    $('.pic_alt').html(this.groupArr[this.index].attr('alt'));
 }
 Viewer.prototype.setSize = function() {
     var $view_img = $('#view_img'),
@@ -101,17 +98,23 @@ Viewer.prototype.setSize = function() {
     var theImg = new Image();
     theImg.src = $view_img.attr('src');
     var $win_w = ($(window).width()) * 0.8,
-        $win_h = ($(window).height()) - 50,
+        $win_h = ($(window).height()) - 100,
         $img_w = theImg.width,
         $img_h = theImg.height;
     var scale_w = $win_w / $img_w,
         scale_h = $win_h / $img_h;
 
     var scale = Math.min(scale_w, scale_h, 1);
-    $view_img.css({
-        width: $img_w * scale,
-        height: $img_h * scale
-    })
+    $view_img.attr('src', ' ');
+    $view_img.animate({
+            width: $img_w * scale,
+            height: $img_h * scale
+        }, 800,
+        function() {
+            var $url = _this.groupArr[_this.index].attr('src');
+            $view_img.attr('src', $url);
+        });
+
     var top = parseInt(($win_h + 50) - $view_img.height()) / 2;
 
     $img_content.css('top', top);
