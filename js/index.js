@@ -50,6 +50,20 @@ Viewer.prototype.addEven = function() {
     $('.next').on('click', function() {
         _this.imgChange(1);
     });
+    $(document).on('keyup', function(e) {
+        switch (e.keyCode) {
+            case 27:
+                _this.mask.fadeOut();
+                _this.container.fadeOut();
+                break;
+            case 37:
+                _this.imgChange(-1);
+                break;
+            case 39:
+                _this.imgChange(1);
+                break;
+        };
+    });
 }
 Viewer.prototype.getGroup = function(img) {
     var _this = this;
