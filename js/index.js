@@ -22,8 +22,8 @@ Viewer.prototype.create = function() {
         '<span class="next iconfont icon-jiantouyou"></span>' +
         '<img id="view_img" src=""/>' +
         '<div class="light_info">' +
-        '<p class="active"></p>' +
         '<p class="pic_alt"></p>' +
+        '<p class="active"></p>' +
         '<span class="reset">x</span>' +
         '</div>' +
         '</div>';
@@ -88,8 +88,6 @@ Viewer.prototype.getArrow = function() {
     } else {
         $('.prev,.next').hide();
     }
-    $('.active').html((this.index + 1) + ' of ' + arrLen);
-    $('.pic_alt').html(this.groupArr[this.index].attr('alt'));
 }
 Viewer.prototype.setSize = function() {
     var $view_img = $('#view_img'),
@@ -112,6 +110,8 @@ Viewer.prototype.setSize = function() {
         function() {
             var $url = _this.groupArr[_this.index].attr('src');
             $view_img.attr('src', $url);
+            $('.active').html((_this.index + 1) + ' of ' + _this.groupArr.length);
+            $('.pic_alt').html(_this.groupArr[_this.index].attr('alt'));
         });
 
     var top = parseInt(($win_h + 50) - $img_h * scale) / 2;
