@@ -11,22 +11,23 @@ function Viewer() {
 Viewer.prototype.init = function() {
     this.create();
     this.addEven();
-    this.hidePic();
 }
 Viewer.prototype.create = function() {
     this.container = $('<div id="view-box"></div>').hide();
     this.mask = $('<div class="view_mask"></div>').hide();
 
-    var strDom = '<div id="img_content" class="mask_pic">' +
+    var strDom = '<div class="box_pic" >' +
+        '<div id="img_content" class="mask_pic">' +
         '<span class="prev iconfont icon-fanhui"></span>' +
         '<span class="next iconfont icon-jiantouyou"></span>' +
         '<img id="view_img" src=""/>' +
+        '</div>' +
         '<div class="light_info">' +
         '<p class="pic_alt"></p>' +
         '<p class="active"></p>' +
         '<span class="reset">x</span>' +
-        '</div>' +
         '</div>';
+    '</div>' +
 
     this.container.append(strDom);
     $('body').append(this.mask, this.container);
@@ -34,9 +35,7 @@ Viewer.prototype.create = function() {
 Viewer.prototype.addEven = function() {
     var _this = this;
     $('body').on('click', '.view-pic', function(e) {
-        _this.mask.show();
-        _this.container.show();
-
+        _this.showBox();
 
         _this.getGroup(this);
         _this.setSize();
@@ -45,16 +44,18 @@ Viewer.prototype.addEven = function() {
 
     });
     $('.prev').on('click', function() {
+
         _this.imgChange(-1);
+
+
     });
     $('.next').on('click', function() {
         _this.imgChange(1);
     });
-    $(document).on('keyup', function(e) {
+    $(document).keyup(function(e) {
         switch (e.keyCode) {
             case 27:
-                _this.mask.fadeOut();
-                _this.container.fadeOut();
+                _this.hideBox();
                 break;
             case 37:
                 _this.imgChange(-1);
@@ -63,6 +64,9 @@ Viewer.prototype.addEven = function() {
                 _this.imgChange(1);
                 break;
         };
+    });
+    $(".reset , .view_mask").on('click', function() {
+        _this.hideBox();
     });
 }
 Viewer.prototype.getGroup = function(img) {
@@ -80,7 +84,11 @@ Viewer.prototype.getGroup = function(img) {
     this.index = this.groupList.index($(img));
 }
 Viewer.prototype.imgChange = function(step) {
+    $('.light_info').hide();
+
     this.index += step;
+    var len = this.groupArr.length;
+    this.index = Math.max(0, Math.min(this.index, len - 1));
 
     this.getArrow();
     this.setSize();
@@ -102,11 +110,11 @@ Viewer.prototype.getArrow = function() {
     } else {
         $('.prev,.next').hide();
     }
+
 }
 Viewer.prototype.setSize = function() {
     var $view_img = $('#view_img'),
-        _this = this,
-        $img_content = $('#img_content');
+        _this = this;
     var theImg = new Image();
     theImg.src = this.groupArr[this.index].attr('src');
     var $win_w = ($(window).width()) * 0.8,
@@ -124,21 +132,21 @@ Viewer.prototype.setSize = function() {
         function() {
             var $url = _this.groupArr[_this.index].attr('src');
             $view_img.attr('src', $url);
+            $('.light_info').show();
+
             $('.active').html((_this.index + 1) + ' of ' + _this.groupArr.length);
             $('.pic_alt').html(_this.groupArr[_this.index].attr('alt'));
+
         });
 
-    var top = parseInt(($win_h + 50) - $img_h * scale) / 2;
 
-    $img_content.css('top', top);
-
-    $('.prev,.next').css('height', $img_h * scale)
 }
 
-Viewer.prototype.hidePic = function() {
-    var _this = this;
-    $(".reset , .view_mask").on('click', function() {
-        _this.mask.fadeOut();
-        _this.container.fadeOut();
-    });
+Viewer.prototype.hideBox = function() {
+    this.mask.fadeOut();
+    this.container.fadeOut();
+}
+Viewer.prototype.showBox = function() {
+    this.mask.show();
+    this.container.show();
 }
