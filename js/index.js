@@ -5,7 +5,6 @@ $(function() {
 function Viewer() {
     this.groupName = null;
     this.groupArr = [];
-    this.index = 0;
     this.init();
 }
 Viewer.prototype.init = function() {
